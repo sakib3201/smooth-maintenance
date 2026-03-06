@@ -106,9 +106,50 @@
 	&__control {
 		flex-shrink: 0;
 
-		.components-toggle-control {
-			margin-bottom: 0;
+		.components-form-toggle.is-checked .components-form-toggle__track {
+			background-color: #22c55e;
 		}
+	}
+}
+
+// Template Selector Styles
+.sm-template-selector {
+	margin-top: 1.5rem;
+
+	.sm-description {
+		margin-top: -0.5rem;
+		margin-bottom: 2rem;
+		color: #64748b;
+		font-size: 0.95rem;
+	}
+
+	.sm-template-controls {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+
+		.components-base-control {
+			margin-bottom: 0;
+			flex-grow: 1;
+		}
+
+		select {
+			padding: 0.5rem;
+			font-size: 1rem;
+			min-width: 250px;
+		}
+	}
+
+	.sm-error-text {
+		color: #ef4444;
+		font-weight: 500;
+	}
+
+	.sm-template-footer {
+		margin-top: 1.5rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid #e2e8f0;
 	}
 }
 

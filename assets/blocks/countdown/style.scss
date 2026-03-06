@@ -1,0 +1,80 @@
+/**
+ * Frontend styles for the Countdown Block.
+ */
+
+.wp-block-smooth-maintenance-countdown {
+    box-sizing: border-box;
+}
+
+.sm-countdown-wrapper {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    text-align: center;
+    margin: 2rem auto;
+}
+
+.sm-countdown-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.sm-countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    min-width: 100px;
+}
+
+.sm-countdown-number {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    font-variant-numeric: tabular-nums;
+    color: inherit;
+}
+
+.sm-countdown-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+}
+
+.sm-countdown-expired {
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 600px) {
+    .sm-countdown-grid {
+        gap: 1rem;
+    }
+
+    .sm-countdown-item {
+        padding: 1rem 1.25rem;
+        min-width: 70px;
+    }
+
+    .sm-countdown-number {
+        font-size: 2.25rem;
+    }
+
+    .sm-countdown-label {
+        font-size: 0.75rem;
+    }
+}

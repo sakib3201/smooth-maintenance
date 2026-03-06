@@ -37,6 +37,7 @@ class Settings extends BaseModel {
 	 */
 	protected static array $defaults = array(
 		'maintenance_mode_enabled' => false,
+		'active_template'          => 0, // Post ID of the sm_template.
 		'version'                  => '1.0.0',
 	);
 
@@ -134,6 +135,10 @@ class Settings extends BaseModel {
 	 */
 	public function validate( array $data ): bool {
 		if ( isset( $data['maintenance_mode_enabled'] ) && ! is_bool( $data['maintenance_mode_enabled'] ) ) {
+			return false;
+		}
+
+		if ( isset( $data['active_template'] ) && ! is_numeric( $data['active_template'] ) ) {
 			return false;
 		}
 

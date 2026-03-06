@@ -6,6 +6,7 @@
 
 import Header from './components/Header';
 import MaintenanceToggle from './components/MaintenanceToggle';
+import TemplateSelector from './components/TemplateSelector';
 
 const App = () => {
     return (
@@ -13,6 +14,7 @@ const App = () => {
             <Header />
             <div className="sm-admin-content">
                 <MaintenanceToggle />
+                <TemplateSelector />
             </div>
         </div>
     );

@@ -4,8 +4,9 @@
     "description": "Smooth Maintenance WordPress plugin - Admin interface",
     "private": true,
     "scripts": {
-        "start": "wp-scripts start assets/admin/src/index.js --output-path=build",
-        "build": "wp-scripts build assets/admin/src/index.js --output-path=build",
+        "start": "wp-scripts start",
+        "build": "wp-scripts build",
+        "production-build": "node bin/production-build.mjs",
         "test": "vitest",
         "test:coverage": "vitest --coverage",
         "lint:js": "wp-scripts lint-js assets/admin/src/",

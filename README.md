@@ -64,6 +64,25 @@ The smoothest maintenance mode plugin for WordPress. Built with modern MVC archi
 
 6. Activate the plugin in WordPress admin
 
+### Production Build (WordPress.org Release)
+
+One command creates a clean distribution folder and versioned zip in `plugins/dist/`:
+
+```bash
+npm run production-build
+```
+
+**What it does:**
+- Runs `npm run build` (minified JS/CSS)
+- Installs Composer deps with `--no-dev --optimize-autoloader`
+- Copies only distributable files to `plugins/dist/smooth-maintenance/`
+- Creates `plugins/dist/smooth-maintenance-x.x.x.zip`
+
+**Excluded from the zip:** `node_modules/`, `vendor/` (dev), `tests/`, `assets/` (src), `.github/`, dev config files.
+
+The zip file is named with the version from the plugin header (e.g. `smooth-maintenance-1.0.0.zip`) and is ready for WordPress.org submission.
+
+
 ### Running Tests
 
 ```bash
@@ -106,6 +125,20 @@ smooth-maintenance/
 | `/wp-json/smooth-maintenance/v1/settings` | GET | `manage_options` | Get settings |
 | `/wp-json/smooth-maintenance/v1/settings` | POST | `manage_options` | Update settings |
 
+## Adding New Templates
+
+Smooth Maintenance v1.1 is fully **Gutenberg-native**. We do not use proprietary drag-and-drop builders. Instead, your templates are designed using the core WordPress Block Editor.
+
+To add a new template:
+1. Go to **Maintenance → Templates** in your WordPress admin.
+2. Click **Add New**.
+3. Use native Gutenberg blocks (Cover, Group, Heading, etc.) to design your maintenance landing page.
+4. Insert the **Countdown Timer** block (`smooth-maintenance/countdown`) if you want a live counter.
+5. Publish the template.
+6. Go back to **Maintenance → Settings** and select your new template from the dropdown.
+
+The plugin will automatically render your template on the frontend *without* your active theme's header or footer, ensuring a true full-screen landing page experience while preserving all block styles.
+
 ## Extensibility
 
 ```php
@@ -115,28 +148,18 @@ add_filter( 'smooth_maintenance_bypass', function( $bypass, $user ) {
     return $bypass;
 }, 10, 2 );
 
-// Custom maintenance template
-add_filter( 'smooth_maintenance_template_path', function( $path ) {
-    return get_stylesheet_directory() . '/my-maintenance.php';
-} );
-
-// Modify template variables
-add_filter( 'smooth_maintenance_content', function( $vars ) {
-    $vars['message'] = 'Custom maintenance message';
-    return $vars;
+// Filter the fully rendered HTML output of the block template
+add_filter( 'smooth_maintenance_html', function( $html ) {
+    // You can inject custom scripts or pixels here
+    return $html;
 } );
 ```
 
-## Theme Override
-
-Create `smooth-maintenance/maintenance.php` in your active theme to fully customize the maintenance page. Available variables: `$site_name`, `$site_url`, `$logo_url`, `$message`.
-
 ## Roadmap
 
-- **v1.1** — Template selector (5 pre-designed templates), countdown timer
-- **v1.2** — Email subscriber capture, export to CSV, Mailchimp/ConvertKit webhooks
+- **v1.2** — Email subscriber capture block, Mailchimp/ConvertKit webhooks
 - **v1.3** — Preview link with secret tokens, IP whitelist, role-based bypass
-- **v2.0** — Gutenberg FSE integration, custom CSS editor, A/B testing
+- **v2.0** — Advanced Analytics, A/B testing of templates
 
 ## License
 

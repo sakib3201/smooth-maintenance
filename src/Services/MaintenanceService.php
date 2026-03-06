@@ -104,30 +104,35 @@ class MaintenanceService {
 
 		$this->setStatus();
 
-		// Template variables for the view.
-		$site_name = get_bloginfo( 'name' );
-		$site_url  = home_url();
-		$logo_url  = '';
-		$message   = __( 'We are currently performing scheduled maintenance. We will be back online shortly.', 'smooth-maintenance' );
+		$template_id = Settings::get( 'active_template' );
+		$post        = get_post( $template_id );
+		$content     = '';
 
-		// Check for theme override.
-		$template_path = $this->getTemplatePath();
+		if ( $post && \SmoothMaintenance\Core\PostTypes::TEMPLATE_CPT === $post->post_type ) {
+			// Process Gutenberg blocks into HTML.
+			$content = do_blocks( $post->post_content );
+			// Process shortcodes and other core filters.
+			$content = apply_filters( 'the_content', $content );
+		} else {
+			// Fallback if no valid template is set or found.
+			$content = '<h1>' . esc_html__( 'Maintenance Mode', 'smooth-maintenance' ) . '</h1><p>' . esc_html__( 'We will be back shortly.', 'smooth-maintenance' ) . '</p>';
+		}
 
-		/**
-		 * Filter the maintenance page content variables.
-		 *
-		 * @param array $vars Template variables.
-		 */
-		$vars = apply_filters(
-			'smooth_maintenance_content',
-			compact( 'site_name', 'site_url', 'logo_url', 'message' )
+		$title = sprintf(
+			/* translators: %s: Site name */
+			__( 'Maintenance - %s', 'smooth-maintenance' ),
+			get_bloginfo( 'name' )
 		);
 
-		// Extract variables for the template.
-		// phpcs:ignore WordPress.PHP.DontExtract.extract_extract
-		extract( $vars );
+		/**
+		 * Filter the fully rendered HTML content before output.
+		 *
+		 * @param string $content HTML content.
+		 */
+		$html_content = apply_filters( 'smooth_maintenance_html', $content );
 
-		include $template_path;
+		// Load the clean canvas shell.
+		include Constants::pluginPath() . 'src/Views/Frontend/canvas.php';
 		exit;
 	}
 
@@ -143,31 +148,7 @@ class MaintenanceService {
 		nocache_headers();
 	}
 
-	/**
-	 * Get the maintenance template path.
-	 *
-	 * Checks for theme override first.
-	 *
-	 * @return string Template file path.
-	 */
-	protected function getTemplatePath(): string {
-		// Check for theme override.
-		$theme_template = get_stylesheet_directory() . '/smooth-maintenance/maintenance.php';
 
-		/**
-		 * Filter the maintenance template path.
-		 *
-		 * @param string $path Template file path.
-		 */
-		$template = apply_filters( 'smooth_maintenance_template_path', $theme_template );
-
-		if ( file_exists( $template ) ) {
-			return $template;
-		}
-
-		// Fallback to plugin template.
-		return Constants::pluginPath() . 'src/Views/Frontend/maintenance.php';
-	}
 
 	/**
 	 * Check if current page is the login page.

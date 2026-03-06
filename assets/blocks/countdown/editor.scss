@@ -1,0 +1,32 @@
+/**
+ * Editor-specific styles.
+ */
+
+.sm-countdown-placeholder {
+    padding: 3rem;
+    text-align: center;
+    background: #f0f0f1;
+    border: 2px dashed #8c8f94;
+    border-radius: 8px;
+    color: #3c434a;
+
+    p {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+}
+
+/* In the editor, ensure the glassmorphism has a fallback if background is plain white */
+.block-editor-block-list__block .sm-countdown-item {
+    background: rgba(0, 0, 0, 0.05);
+    /* slightly darker for light themes in editor */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: none;
+    color: #1e1e1e;
+
+    .sm-countdown-label {
+        color: #1e1e1e;
+        opacity: 0.7;
+    }
+}

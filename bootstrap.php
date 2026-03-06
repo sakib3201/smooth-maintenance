@@ -19,6 +19,8 @@ use SmoothMaintenance\Controllers\Api\MaintenanceController;
 use SmoothMaintenance\Controllers\Admin\AdminController;
 use SmoothMaintenance\Services\MaintenanceService;
 use SmoothMaintenance\Middleware\AuthMiddleware;
+use SmoothMaintenance\Core\PostTypes;
+use SmoothMaintenance\Blocks\CountdownBlock;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -124,6 +126,20 @@ class Bootstrap {
 			}
 		);
 
+		$this->container->singleton(
+			PostTypes::class,
+			function () {
+				return new PostTypes();
+			}
+		);
+
+		$this->container->singleton(
+			CountdownBlock::class,
+			function () {
+				return new CountdownBlock();
+			}
+		);
+
 		// Controllers.
 		$this->container->bind(
 			MaintenanceController::class,
@@ -184,6 +200,15 @@ class Bootstrap {
 	 * @return void
 	 */
 	private function registerHooks(): void {
+		// Custom Post Types and Blocks.
+		$this->loader->addAction(
+			'init',
+			function () {
+				$this->container->make( PostTypes::class )->register();
+				$this->container->make( CountdownBlock::class )->register();
+			}
+		);
+
 		// Admin menu.
 		$this->loader->addAction(
 			'admin_menu',
