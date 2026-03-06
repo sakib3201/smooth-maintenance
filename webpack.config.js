@@ -15,6 +15,7 @@ module.exports = {
         'blocks/countdown/view': path.resolve(process.cwd(), 'assets/blocks/countdown', 'view.js'),
         'blocks/subscriber-form/index': path.resolve(process.cwd(), 'assets/blocks/subscriber-form', 'index.js'),
         'blocks/subscriber-form/view': path.resolve(process.cwd(), 'assets/blocks/subscriber-form', 'view.js'),
+        'blocks/editor-preview/index': path.resolve(process.cwd(), 'assets/blocks/editor-preview', 'index.js'),
     },
     output: {
         ...defaultConfig.output,

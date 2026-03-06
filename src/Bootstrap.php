@@ -19,6 +19,7 @@ use SmoothMaintenance\Controllers\Api\MaintenanceController;
 use SmoothMaintenance\Controllers\Admin\AdminController;
 use SmoothMaintenance\Services\AssetManager;
 use SmoothMaintenance\Services\MaintenanceService;
+use SmoothMaintenance\Services\PreviewService;
 use SmoothMaintenance\Middleware\AuthMiddleware;
 use SmoothMaintenance\Core\PostTypes;
 use SmoothMaintenance\Blocks\CountdownBlock;
@@ -176,6 +177,13 @@ class Bootstrap {
 			}
 		);
 
+		$this->container->singleton(
+			PreviewService::class,
+			function () {
+				return new PreviewService();
+			}
+		);
+
 		// Asset Manager (Performance)
 		$this->container->singleton(
 			AssetManager::class,
@@ -259,6 +267,48 @@ class Bootstrap {
 				$maintenance_service->render();
 			},
 			1
+		);
+
+		// Preview handler - must fire before MaintenanceService (priority 1).
+		$this->loader->addAction(
+			'template_redirect',
+			function () {
+				$this->container->make( PreviewService::class )->handle();
+			},
+			0
+		);
+
+		// Enqueue Gutenberg preview plugin - only on sm_template edit screens.
+		$this->loader->addAction(
+			'enqueue_block_editor_assets',
+			function () {
+				$screen = get_current_screen();
+				if ( ! $screen || PostTypes::TEMPLATE_CPT !== $screen->post_type ) {
+					return;
+				}
+
+				$asset_file = Constants::pluginPath() . 'build/blocks/editor-preview/index.asset.php';
+				$asset      = file_exists( $asset_file )
+					? require $asset_file
+					: array( 'dependencies' => array(), 'version' => '1.0.0' );
+
+				wp_enqueue_script(
+					'sm-editor-preview',
+					Constants::pluginUrl() . 'build/blocks/editor-preview/index.js',
+					$asset['dependencies'],
+					$asset['version'],
+					true
+				);
+
+				wp_localize_script(
+					'sm-editor-preview',
+					'smPreviewData',
+					array(
+						'nonce'      => wp_create_nonce( 'sm_preview' ),
+						'previewUrl' => home_url( '/' ),
+					)
+				);
+			}
 		);
 	}
 
