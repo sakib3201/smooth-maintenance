@@ -10,7 +10,8 @@
         "test": "vitest",
         "test:coverage": "vitest --coverage",
         "lint:js": "wp-scripts lint-js assets/admin/src/",
-        "format": "wp-scripts format assets/admin/src/"
+        "format": "wp-scripts format assets/admin/src/",
+        "makepot": "wp-scripts makepot"
     },
     "dependencies": {
         "@wordpress/api-fetch": "^7.0.0",

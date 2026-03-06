@@ -17,6 +17,7 @@ use SmoothMaintenance\Models\Settings;
 use SmoothMaintenance\Models\Subscriber;
 use SmoothMaintenance\Controllers\Api\MaintenanceController;
 use SmoothMaintenance\Controllers\Admin\AdminController;
+use SmoothMaintenance\Services\AssetManager;
 use SmoothMaintenance\Services\MaintenanceService;
 use SmoothMaintenance\Middleware\AuthMiddleware;
 use SmoothMaintenance\Core\PostTypes;
@@ -174,6 +175,14 @@ class Bootstrap {
 				);
 			}
 		);
+
+		// Asset Manager (Performance)
+		$this->container->singleton(
+			AssetManager::class,
+			function ( Container $c ) {
+				return new AssetManager();
+			}
+		);
 	}
 
 	/**
@@ -205,9 +214,6 @@ class Bootstrap {
 	}
 
 	/**
-	 * Register WordPress hooks.
-	 *
-	 * @return void
 	 */
 	private function registerHooks(): void {
 		// Custom Post Types and Blocks.
@@ -240,7 +246,13 @@ class Bootstrap {
 		$this->loader->addAction(
 			'template_redirect',
 			function () {
-				$this->container->make( MaintenanceService::class )->render();
+				$maintenance_service = $this->container->make( MaintenanceService::class );
+				if ( $maintenance_service->shouldShowMaintenance() ) {
+					// Init performance optimizations first.
+					$this->container->make( AssetManager::class )->init();
+				}
+				// Then attempt to render.
+				$maintenance_service->render();
 			},
 			1
 		);

@@ -39,7 +39,17 @@ class MaintenanceController extends BaseController {
 	 * @return \WP_REST_Response
 	 */
 	public function index( \WP_REST_Request $request ): \WP_REST_Response {
-		return $this->success( Settings::all() );
+		$cache_key = 'sm_settings_rest_cache';
+		$cached    = get_transient( $cache_key );
+
+		if ( false !== $cached ) {
+			return $this->success( $cached );
+		}
+
+		$settings = Settings::all();
+		set_transient( $cache_key, $settings, WEEK_IN_SECONDS );
+
+		return $this->success( $settings );
 	}
 
 	/**
@@ -56,6 +66,7 @@ class MaintenanceController extends BaseController {
 			$data,
 			array(
 				'maintenance_mode_enabled' => 'boolean',
+				'active_template'          => 'numeric',
 			)
 		);
 
@@ -70,6 +81,16 @@ class MaintenanceController extends BaseController {
 				rest_sanitize_boolean( $data['maintenance_mode_enabled'] )
 			);
 		}
+
+		if ( isset( $data['active_template'] ) ) {
+			Settings::set(
+				'active_template',
+				absint( $data['active_template'] )
+			);
+		}
+
+		// Clear the REST API cache.
+		delete_transient( 'sm_settings_rest_cache' );
 
 		return $this->success(
 			Settings::all(),

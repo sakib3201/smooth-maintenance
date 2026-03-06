@@ -17,8 +17,8 @@ const TemplateSelector = () => {
     const [isFetching, setIsFetching] = useState(true);
 
     useEffect(() => {
-        // Fetch published templates.
-        apiFetch({ path: '/wp/v2/sm_template?status=publish&per_page=100' })
+        // Fetch published templates with optimized field selection.
+        apiFetch({ path: '/wp/v2/sm_template?status=publish&per_page=100&_fields=id,title' })
             .then((posts) => {
                 const options = posts.map((post) => ({
                     label: post.title.rendered || __('(Untitled)', 'smooth-maintenance'),
