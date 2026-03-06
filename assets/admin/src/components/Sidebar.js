@@ -1,21 +1,22 @@
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
 import SearchBar from './SearchBar';
 
-const Sidebar = () => {
-    const [activeTab, setActiveTab] = useState('settings');
+const Sidebar = ( { activeTab, setActiveTab } ) => {
     const adminData = window.smoothMaintenanceAdmin || {};
 
     const navItems = [
         { id: 'settings', label: __('Settings', 'smooth-maintenance'), icon: '⚙️' },
         { id: 'subscribers', label: __('Subscribers', 'smooth-maintenance'), icon: '👥' },
         { id: 'analytics', label: __('Analytics', 'smooth-maintenance'), icon: '📊' },
+        { id: 'templates', label: __('Templates', 'smooth-maintenance'), icon: '🎨' },
     ];
 
     return (
         <aside className="sm-sidebar">
             <div className="sm-sidebar__logo">
-                <div className="sm-sidebar__logo-icon">SM</div>
+                <div className="sm-sidebar__logo-icon">
+                    <span className="sm-sidebar__logo-cursive">sm</span>
+                </div>
                 <div className="sm-sidebar__logo-text">Smooth Maintenance</div>
             </div>
 

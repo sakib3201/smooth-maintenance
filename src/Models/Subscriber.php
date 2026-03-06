@@ -91,6 +91,44 @@ class Subscriber extends BaseModel {
 	}
 
 	/**
+	 * Get all subscribers with pagination.
+	 *
+	 * @param int $limit  Max rows to return.
+	 * @param int $offset Row offset.
+	 * @return array
+	 */
+	public static function getAll( int $limit = 50, int $offset = 0 ): array {
+		global $wpdb;
+		$table = static::getTable();
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				"SELECT id, email, subscribed_at, ip_address FROM {$table} ORDER BY subscribed_at DESC LIMIT %d OFFSET %d",
+				$limit,
+				$offset
+			),
+			ARRAY_A
+		);
+		return $rows ?: [];
+	}
+
+	/**
+	 * Count all subscribers.
+	 *
+	 * @return int
+	 */
+	public static function count(): int {
+		global $wpdb;
+		$table = static::getTable();
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		return (int) $wpdb->get_var(
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			"SELECT COUNT(*) FROM {$table}"
+		);
+	}
+
+	/**
 	 * Validate subscriber data.
 	 *
 	 * @param array $data Data to validate.

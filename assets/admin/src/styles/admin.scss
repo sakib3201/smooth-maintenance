@@ -84,6 +84,16 @@ body.sm-saas-admin {
 			box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 		}
 
+		&-cursive {
+			font-family: 'Georgia', 'Palatino Linotype', serif;
+			font-style: italic;
+			font-weight: 700;
+			font-size: 1.1rem;
+			color: #fff;
+			letter-spacing: -0.02em;
+			line-height: 1;
+		}
+
 		&-text {
 			font-size: 1.1rem;
 			font-weight: 700;
@@ -177,6 +187,13 @@ body.sm-saas-admin {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	background-color: var(--sm-bg);
+	padding-bottom: 24px;
+	border-bottom: 1px solid var(--sm-border);
+	transition: background-color var(--sm-transition), border-color var(--sm-transition);
 
 	&__text h2 {
 		margin: 0;
@@ -381,4 +398,199 @@ body.sm-saas-admin {
 			color: #fff;
 		}
 	}
+}
+
+/* Buttons */
+.sm-btn-primary {
+	background: var(--sm-primary);
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	padding: 8px 16px;
+	font-size: 0.875rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.2s ease;
+
+	&:hover:not(:disabled) {
+		background: var(--sm-primary-hover);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+.sm-btn-secondary {
+	background: var(--sm-surface);
+	color: var(--sm-text);
+	border: 1px solid var(--sm-border);
+	border-radius: 8px;
+	padding: 8px 16px;
+	font-size: 0.875rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.2s ease;
+
+	&:hover:not(:disabled) {
+		border-color: var(--sm-primary);
+		color: var(--sm-primary);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+/* Subscribers Table */
+.sm-subscribers-table {
+	width: 100%;
+	border-collapse: collapse;
+
+	th {
+		color: var(--sm-text-muted);
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		padding: 0 16px 12px;
+		text-align: left;
+	}
+
+	td {
+		color: var(--sm-text);
+		border-top: 1px solid var(--sm-border);
+		padding: 12px 16px;
+		font-size: 0.875rem;
+	}
+
+	tr:hover td {
+		background-color: var(--sm-bg);
+	}
+}
+
+/* Skeleton shimmer */
+@keyframes sm-shimmer {
+	0% { background-position: -200% 0; }
+	100% { background-position: 200% 0; }
+}
+
+.sm-skeleton {
+	height: 16px;
+	border-radius: 4px;
+	background: linear-gradient(90deg, var(--sm-border) 25%, var(--sm-surface) 50%, var(--sm-border) 75%);
+	background-size: 200%;
+	animation: sm-shimmer 1.5s infinite;
+}
+
+/* Empty state */
+.sm-empty-state {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 60px 24px;
+	text-align: center;
+	color: var(--sm-text-muted);
+}
+
+/* Badge */
+.sm-badge {
+	display: inline-block;
+	font-size: 0.65rem;
+	font-weight: 700;
+	padding: 2px 6px;
+	border-radius: 4px;
+	background: var(--sm-primary);
+	color: #fff;
+}
+
+/* Page header bar */
+.sm-page-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 24px;
+}
+
+/* WordPress SelectControl / InputControl dark-mode fix */
+.components-select-control__input,
+.components-input-control__input {
+	background-color: var(--sm-surface) !important;
+	color: var(--sm-text) !important;
+	border-color: var(--sm-border) !important;
+}
+
+.components-input-control__backdrop {
+	border-color: var(--sm-border) !important;
+}
+
+.components-input-control__container {
+	background-color: var(--sm-surface) !important;
+}
+
+.components-base-control__label,
+.components-input-control__label {
+	color: var(--sm-text) !important;
+}
+
+[data-theme="dark"] .components-input-control__suffix svg {
+	fill: var(--sm-text-muted) !important;
+}
+
+/* Templates Grid */
+.sm-templates-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 16px;
+}
+
+.sm-template-card {
+	background-color: var(--sm-surface);
+	border: 2px solid var(--sm-border);
+	border-radius: 16px;
+	padding: 20px;
+	transition: var(--sm-transition);
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+
+	&__title {
+		font-size: 1rem;
+		font-weight: 700;
+		color: var(--sm-text);
+		margin: 0;
+	}
+
+	&__date {
+		font-size: 0.8rem;
+		color: var(--sm-text-muted);
+	}
+
+	&__actions {
+		display: flex;
+		gap: 8px;
+		margin-top: auto;
+		padding-top: 16px;
+	}
+
+	&.is-active {
+		border-color: var(--sm-primary);
+		box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+	}
+}
+
+.sm-active-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 0.7rem;
+	font-weight: 700;
+	padding: 3px 8px;
+	border-radius: 20px;
+	background: var(--sm-success);
+	color: #fff;
+	margin-left: 8px;
+	vertical-align: middle;
 }

@@ -134,6 +134,29 @@ class MaintenanceController extends BaseController {
 	}
 
 	/**
+	 * GET /subscribers - Retrieve paginated subscriber list.
+	 *
+	 * @param \WP_REST_Request $request The REST request.
+	 * @return \WP_REST_Response
+	 */
+	public function getSubscribers( \WP_REST_Request $request ): \WP_REST_Response {
+		$page     = max( 1, (int) $request->get_param( 'page' ) );
+		$per_page = min( 100, max( 10, (int) ( $request->get_param( 'per_page' ) ?: 50 ) ) );
+		$offset   = ( $page - 1 ) * $per_page;
+
+		$subscribers = \SmoothMaintenance\Models\Subscriber::getAll( $per_page, $offset );
+		$total       = \SmoothMaintenance\Models\Subscriber::count();
+
+		return $this->success( array(
+			'subscribers' => $subscribers,
+			'total'       => $total,
+			'page'        => $page,
+			'per_page'    => $per_page,
+			'pages'       => (int) ceil( $total / $per_page ),
+		) );
+	}
+
+	/**
 	 * Permission callback for routes.
 	 *
 	 * @return bool

@@ -5,7 +5,7 @@ import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { STORE_NAME } from '../store';
 
-const TemplateSelector = () => {
+const TemplateSelector = ( { onManageTemplates } ) => {
     const { settings, isSaving, hasLoaded } = useSelect((select) => ({
         settings: select(STORE_NAME).getSettings(),
         isSaving: select(STORE_NAME).isSaving(),
@@ -89,7 +89,7 @@ const TemplateSelector = () => {
                 <Tooltip text={__('View and manage all your saved maintenance designs', 'smooth-maintenance')}>
                     <Button
                         variant="link"
-                        href="edit.php?post_type=sm_template"
+                        onClick={ onManageTemplates }
                         style={{ padding: 0 }}
                     >
                         {__('Manage all templates →', 'smooth-maintenance')}

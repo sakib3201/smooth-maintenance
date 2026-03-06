@@ -144,6 +144,14 @@ class AdminController extends BaseController {
 			html.wp-toolbar {
 				padding-top: 0 !important;
 			}
+			.wrap > h1,
+			.wp-heading-inline {
+				display: none !important;
+			}
+			.wrap {
+				margin-top: 0 !important;
+				padding-top: 0 !important;
+			}
 		</style>';
 	}
 

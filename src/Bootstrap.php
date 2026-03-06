@@ -202,6 +202,9 @@ class Bootstrap {
 		// Public subscriber route.
 		$router->post( 'subscribe', array( MaintenanceController::class, 'subscribe' ) );
 
+		// Admin subscriber list.
+		$router->get( 'subscribers', array( MaintenanceController::class, 'getSubscribers' ), array( 'auth' ) );
+
 		// Store router and register on rest_api_init.
 		$this->container->instance( Router::class, $router );
 
