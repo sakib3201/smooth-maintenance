@@ -1,9 +1,6 @@
-/**
- * Sidebar component.
- */
-
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
+import SearchBar from './SearchBar';
 
 const Sidebar = () => {
     const [activeTab, setActiveTab] = useState('settings');
@@ -21,6 +18,11 @@ const Sidebar = () => {
                 <div className="sm-sidebar__logo-icon">SM</div>
                 <div className="sm-sidebar__logo-text">Smooth Maintenance</div>
             </div>
+
+            <SearchBar
+                items={navItems}
+                onSelect={(id) => setActiveTab(id)}
+            />
 
             <nav className="sm-sidebar__nav">
                 {navItems.map((item) => (

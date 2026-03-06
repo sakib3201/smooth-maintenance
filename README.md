@@ -139,6 +139,30 @@ To add a new template:
 
 The plugin will automatically render your template on the frontend *without* your active theme's header or footer, ensuring a true full-screen landing page experience while preserving all block styles.
 
+## Design System
+
+Smooth Maintenance features a professional SAAS-style admin interface with a focus on usability and aesthetics.
+
+### Color Palette
+
+The interface uses a curated "Cool" color palette optimized for both Light and Dark modes.
+
+| Variable | Light Mode | Dark Mode | Description |
+| :--- | :--- | :--- | :--- |
+| `--sm-bg` | `#f8fafc` | `#020617` | Main Background |
+| `--sm-surface` | `#ffffff` | `#0f172a` | Card/Surface Background |
+| `--sm-sidebar-bg` | `#0f172a` | `#020617` | Sidebar Background |
+| `--sm-primary` | `#6366f1` | `#818cf8` | Primary Indigo Accent |
+| `--sm-text` | `#1e293b` | `#f1f5f9` | Primary Text |
+| `--sm-text-muted` | `#64748b` | `#94a3b8` | Muted Text |
+| `--sm-border` | `#e2e8f0` | `#1e293b` | Border Color |
+
+### Dark Mode
+A seamless dark mode is supported and can be toggled directly from the admin dashboard. The preference is persisted in the browser's local storage.
+
+### Typography
+The system defaults to **Inter** for a modern, clean look, falling back to standard system fonts for maximum performance.
+
 ## Extensibility
 
 ```php
