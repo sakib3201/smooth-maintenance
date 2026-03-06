@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "smooth-maintenance/subscriber-form",
+    "version": "1.1.0",
+    "title": "Subscriber Form",
+    "category": "design",
+    "icon": "email",
+    "description": "Capture email subscribers directly from your maintenance page.",
+    "supports": {
+        "html": false,
+        "color": {
+            "text": true,
+            "background": false
+        }
+    },
+    "attributes": {
+        "placeholder": {
+            "type": "string",
+            "default": "Enter your email address..."
+        },
+        "buttonText": {
+            "type": "string",
+            "default": "Notify Me"
+        },
+        "successMessage": {
+            "type": "string",
+            "default": "Thanks! You've been subscribed."
+        }
+    },
+    "textdomain": "smooth-maintenance",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css",
+    "viewScript": "file:./view.js"
+}

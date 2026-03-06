@@ -78,6 +78,41 @@ class MaintenanceController extends BaseController {
 	}
 
 	/**
+	 * POST /subscribe - Public endpoint to subscribe an email.
+	 *
+	 * @param \WP_REST_Request $request The REST request.
+	 * @return \WP_REST_Response
+	 */
+	public function subscribe( \WP_REST_Request $request ): \WP_REST_Response {
+		$data = $request->get_json_params();
+		$email = isset( $data['email'] ) ? sanitize_email( $data['email'] ) : '';
+
+		if ( empty( $email ) || ! is_email( $email ) ) {
+			return $this->error( __( 'Please provide a valid email address.', 'smooth-maintenance' ), 400 );
+		}
+
+		// Check if already subscribed.
+		$existing = \SmoothMaintenance\Models\Subscriber::findByEmail( $email );
+		if ( $existing ) {
+			return $this->error( __( 'This email is already subscribed.', 'smooth-maintenance' ), 400 );
+		}
+
+		// Create subscriber.
+		$subscriber = \SmoothMaintenance\Models\Subscriber::create( array(
+			'email'         => $email,
+			'subscribed_at' => current_time( 'mysql' ),
+			'ip_address'    => $request->get_header( 'X-Forwarded-For' ) ?: $_SERVER['REMOTE_ADDR'] ?: '',
+			'user_agent'    => $request->get_header( 'User-Agent' ) ?: '',
+		) );
+
+		if ( ! $subscriber ) {
+			return $this->error( __( 'Could not subscribe. Please try again later.', 'smooth-maintenance' ), 500 );
+		}
+
+		return $this->success( array( 'success' => true ) );
+	}
+
+	/**
 	 * Permission callback for routes.
 	 *
 	 * @return bool

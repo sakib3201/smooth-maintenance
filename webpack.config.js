@@ -12,8 +12,9 @@ module.exports = {
         'admin': path.resolve(process.cwd(), 'assets/admin/src', 'index.js'),
         'blocks/countdown/index': path.resolve(process.cwd(), 'assets/blocks/countdown', 'index.js'),
         'blocks/countdown/view': path.resolve(process.cwd(), 'assets/blocks/countdown', 'view.js'),
-    },
-    output: {
+        'blocks/subscriber-form/index': path.resolve(process.cwd(), 'assets/blocks/subscriber-form', 'index.js'),
+        'blocks/subscriber-form/view': path.resolve(process.cwd(), 'assets/blocks/subscriber-form', 'view.js'),
+    }, output: {
         ...defaultConfig.output,
         path: path.resolve(process.cwd(), 'build'),
     },

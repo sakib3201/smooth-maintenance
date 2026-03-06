@@ -21,6 +21,7 @@ use SmoothMaintenance\Services\MaintenanceService;
 use SmoothMaintenance\Middleware\AuthMiddleware;
 use SmoothMaintenance\Core\PostTypes;
 use SmoothMaintenance\Blocks\CountdownBlock;
+use SmoothMaintenance\Blocks\SubscriberFormBlock;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -140,6 +141,13 @@ class Bootstrap {
 			}
 		);
 
+		$this->container->singleton(
+			SubscriberFormBlock::class,
+			function () {
+				return new SubscriberFormBlock();
+			}
+		);
+
 		// Controllers.
 		$this->container->bind(
 			MaintenanceController::class,
@@ -179,9 +187,11 @@ class Bootstrap {
 		// Register middleware aliases.
 		$router->registerMiddleware( 'auth', AuthMiddleware::class );
 
-		// Settings routes.
 		$router->get( 'settings', array( MaintenanceController::class, 'index' ), array( 'auth' ) );
 		$router->post( 'settings', array( MaintenanceController::class, 'update' ), array( 'auth' ) );
+
+		// Public subscriber route.
+		$router->post( 'subscribe', array( MaintenanceController::class, 'subscribe' ) );
 
 		// Store router and register on rest_api_init.
 		$this->container->instance( Router::class, $router );
@@ -206,6 +216,7 @@ class Bootstrap {
 			function () {
 				$this->container->make( PostTypes::class )->register();
 				$this->container->make( CountdownBlock::class )->register();
+				$this->container->make( SubscriberFormBlock::class )->register();
 			}
 		);
 

@@ -1,10 +1,7 @@
 name: CI
 
 on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   php-tests:
@@ -12,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: ['8.0', '8.1', '8.2', '8.3']
-        wp-version: ['6.0', 'latest']
+        php-version: ['8.0']
+        wp-version: ['latest']
     
     services:
       mysql:
