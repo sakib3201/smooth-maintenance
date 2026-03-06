@@ -25,14 +25,23 @@ const Sidebar = ( { activeTab, setActiveTab } ) => {
                 onSelect={(id) => setActiveTab(id)}
             />
 
-            <nav className="sm-sidebar__nav">
+            <nav className="sm-sidebar__nav" aria-label={__('Main navigation', 'smooth-maintenance')}>
                 {navItems.map((item) => (
                     <div
                         key={item.id}
                         className={`sm-sidebar__nav-item ${activeTab === item.id ? 'is-active' : ''}`}
+                        role="button"
+                        tabIndex={0}
+                        aria-current={activeTab === item.id ? 'page' : undefined}
                         onClick={() => setActiveTab(item.id)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                setActiveTab(item.id);
+                            }
+                        }}
                     >
-                        <span className="sm-sidebar__nav-icon">{item.icon}</span>
+                        <span className="sm-sidebar__nav-icon" aria-hidden="true">{item.icon}</span>
                         <span className="sm-sidebar__nav-label">{item.label}</span>
                     </div>
                 ))}
@@ -40,7 +49,7 @@ const Sidebar = ( { activeTab, setActiveTab } ) => {
 
             <div className="sm-sidebar__footer">
                 <a href={adminData.wpAdminUrl} className="sm-sidebar__wp-exit">
-                    <svg viewBox="0 0 24 24">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9L6 12l5 4.5zm6-4.5h-7v-1h7v1z" />
                     </svg>
                     <span>{__('Back to WordPress', 'smooth-maintenance')}</span>

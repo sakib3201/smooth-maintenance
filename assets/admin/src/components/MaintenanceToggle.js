@@ -1,5 +1,5 @@
 import { useSelect, useDispatch } from '@wordpress/data';
-import { ToggleControl, Spinner, Notice, Tooltip } from '@wordpress/components';
+import { Spinner, Notice } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useState, useCallback } from '@wordpress/element';
 import { STORE_NAME } from '../store';
@@ -34,14 +34,23 @@ const MaintenanceToggle = () => {
     if (!loaded) {
         return (
             <div className="sm-toggle-loading card">
-                <Spinner />
+                <Spinner aria-label={__('Loading configuration…', 'smooth-maintenance')} />
                 <span>{__('Loading configuration…', 'smooth-maintenance')}</span>
             </div>
         );
     }
 
     return (
-        <div className="sm-card">
+        <div className="sm-card sm-card--has-badge" role="region" aria-label={__('Maintenance Mode Control', 'smooth-maintenance')}>
+            <span
+                className={`sm-status-badge sm-status-badge--${isEnabled ? 'maintenance' : 'live'}`}
+                aria-live="polite"
+                aria-atomic="true"
+            >
+                <span className="sm-status-badge__dot" aria-hidden="true" />
+                { isEnabled ? __('Maintenance', 'smooth-maintenance') : __('Live', 'smooth-maintenance') }
+            </span>
+
             {notice && (
                 <Notice
                     status={notice.status}
@@ -62,20 +71,30 @@ const MaintenanceToggle = () => {
                     </p>
                 </div>
                 <div className="sm-toggle-card__control">
-                    <Tooltip text={isEnabled ? __('Switch to Live Mode', 'smooth-maintenance') : __('Go into Maintenance Mode', 'smooth-maintenance')}>
-                        <div>
-                            <ToggleControl
-                                checked={isEnabled}
-                                onChange={handleToggle}
-                                disabled={saving}
-                                __nextHasNoMarginBottom
-                            />
-                        </div>
-                    </Tooltip>
+                    <button
+                        className={`sm-big-toggle${isEnabled ? ' is-on' : ''}`}
+                        role="switch"
+                        aria-checked={isEnabled}
+                        aria-label={isEnabled
+                            ? __('Maintenance mode on — click to go live', 'smooth-maintenance')
+                            : __('Site is live — click to enable maintenance mode', 'smooth-maintenance')
+                        }
+                        onClick={() => handleToggle(!isEnabled)}
+                        disabled={saving}
+                    >
+                        <span className="sm-big-toggle__track" aria-hidden="true" />
+                        <span className="sm-big-toggle__thumb" aria-hidden="true" />
+                    </button>
                 </div>
             </div>
 
-            <div className={`sm-toggle-status ${isEnabled ? 'sm-toggle-status--active' : 'sm-toggle-status--inactive'}`}>
+            <div
+                className={`sm-toggle-status ${isEnabled ? 'sm-toggle-status--active' : 'sm-toggle-status--inactive'}`}
+                aria-label={isEnabled
+                    ? __('Status: Maintenance mode active', 'smooth-maintenance')
+                    : __('Status: Site is live', 'smooth-maintenance')
+                }
+            >
                 <span className="sm-toggle-status__dot" />
                 <span className="sm-toggle-status__text">
                     {isEnabled
@@ -83,7 +102,7 @@ const MaintenanceToggle = () => {
                         : __('Publicly Accessible. Site is currently live.', 'smooth-maintenance')
                     }
                 </span>
-                {saving && <Spinner />}
+                {saving && <Spinner aria-label={__('Saving…', 'smooth-maintenance')} />}
             </div>
         </div>
     );

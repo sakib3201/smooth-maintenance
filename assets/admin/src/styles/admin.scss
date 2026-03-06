@@ -594,3 +594,116 @@ body.sm-saas-admin {
 	margin-left: 8px;
 	vertical-align: middle;
 }
+
+/* Card with badge — extra top padding for the floating pill */
+.sm-card--has-badge {
+	position: relative;
+	padding-top: 40px;
+}
+
+/* Status badge pill floating on card top-left edge */
+.sm-status-badge {
+	position: absolute;
+	top: -14px;
+	left: 20px;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 0.7rem;
+	font-weight: 800;
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+	padding: 4px 12px;
+	border-radius: 20px;
+	border: 2px solid var(--sm-surface);
+
+	&--live {
+		background: var(--sm-success);
+		color: #fff;
+
+		.sm-status-badge__dot { background: #fff; }
+	}
+
+	&--maintenance {
+		background: #f59e0b;
+		color: #fff;
+
+		.sm-status-badge__dot { background: #fff; }
+	}
+
+	&__dot {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		animation: sm-pulse 2s infinite;
+	}
+}
+
+@keyframes sm-pulse {
+	0%, 100% { opacity: 1; transform: scale(1); }
+	50%       { opacity: 0.6; transform: scale(0.85); }
+}
+
+/* Large custom toggle switch */
+.sm-big-toggle {
+	position: relative;
+	width: 72px;
+	height: 40px;
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--sm-primary);
+		outline-offset: 3px;
+		border-radius: 24px;
+	}
+
+	&__track {
+		display: block;
+		width: 100%;
+		height: 100%;
+		border-radius: 24px;
+		background: var(--sm-border);
+		transition: background 0.25s ease;
+	}
+
+	&__thumb {
+		position: absolute;
+		top: 4px;
+		left: 4px;
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		background: #fff;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+		transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	&.is-on {
+		.sm-big-toggle__track { background: var(--sm-success); }
+		.sm-big-toggle__thumb { transform: translateX(32px); }
+	}
+}
+
+/* Template card hover lift */
+.sm-template-card {
+	&:hover {
+		border-color: var(--sm-primary);
+		box-shadow: 0 8px 24px rgba(99, 102, 241, 0.14);
+		transform: translateY(-3px);
+	}
+}
+
+/* Global focus-visible ring */
+.sm-saas-admin :focus-visible {
+	outline: 2px solid var(--sm-primary);
+	outline-offset: 2px;
+	border-radius: 4px;
+}

@@ -21,19 +21,27 @@ const STAT_CARDS = [
 const AnalyticsPage = () => {
     return (
         <>
-            <div className="sm-card" style={ { textAlign: 'center', padding: '48px 32px' } }>
-                <div style={ {
-                    width: '72px',
-                    height: '72px',
-                    background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                    borderRadius: '20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '2rem',
-                    margin: '0 auto 24px',
-                    boxShadow: '0 8px 24px rgba(99, 102, 241, 0.35)',
-                } }>
+            <div
+                className="sm-card"
+                style={ { textAlign: 'center', padding: '48px 32px' } }
+                role="region"
+                aria-label={ __( 'Analytics — Coming Soon', 'smooth-maintenance' ) }
+            >
+                <div
+                    style={ {
+                        width: '72px',
+                        height: '72px',
+                        background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                        borderRadius: '20px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '2rem',
+                        margin: '0 auto 24px',
+                        boxShadow: '0 8px 24px rgba(99, 102, 241, 0.35)',
+                    } }
+                    aria-hidden="true"
+                >
                     📊
                 </div>
                 <h3 style={ { fontSize: '1.5rem', fontWeight: 800, color: 'var(--sm-text)', marginBottom: '12px', letterSpacing: '-0.025em' } }>
@@ -44,10 +52,24 @@ const AnalyticsPage = () => {
                 </p>
             </div>
 
-            <div style={ { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' } }>
+            <div
+                style={ { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' } }
+                role="list"
+            >
                 { STAT_CARDS.map( ( card ) => (
-                    <div key={ card.label } className="sm-card" style={ { marginBottom: 0, textAlign: 'center', padding: '28px 20px' } }>
-                        <div style={ { fontSize: '1.75rem', marginBottom: '12px' } }>{ card.icon }</div>
+                    <div
+                        key={ card.label }
+                        className="sm-card"
+                        style={ { marginBottom: 0, textAlign: 'center', padding: '28px 20px' } }
+                        role="listitem"
+                        aria-label={ card.label }
+                    >
+                        <div
+                            style={ { fontSize: '1.75rem', marginBottom: '12px' } }
+                            aria-hidden="true"
+                        >
+                            { card.icon }
+                        </div>
                         <div style={ { fontSize: '1.75rem', fontWeight: 800, color: 'var(--sm-text)', marginBottom: '6px' } }>
                             { card.value }
                         </div>

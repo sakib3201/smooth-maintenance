@@ -50,7 +50,11 @@ const TemplatesPage = () => {
                     <div className="sm-skeleton" style={ { width: '120px', height: '28px' } } />
                     <div className="sm-skeleton" style={ { width: '140px', height: '36px' } } />
                 </div>
-                <div className="sm-templates-grid">
+                <div
+                    className="sm-templates-grid"
+                    role="status"
+                    aria-label={ __( 'Loading templates', 'smooth-maintenance' ) }
+                >
                     { [ 1, 2, 3 ].map( ( i ) => (
                         <div key={ i } className="sm-template-card">
                             <div className="sm-skeleton" style={ { width: '70%', height: '20px' } } />
@@ -65,8 +69,8 @@ const TemplatesPage = () => {
 
     if ( templates.length === 0 ) {
         return (
-            <div className="sm-empty-state">
-                <span style={ { fontSize: '3rem', marginBottom: '16px' } }>🎨</span>
+            <div className="sm-empty-state" role="status">
+                <span style={ { fontSize: '3rem', marginBottom: '16px' } } aria-hidden="true">🎨</span>
                 <h3 style={ { color: 'var(--sm-text)', marginBottom: '8px' } }>
                     { __( 'No templates yet', 'smooth-maintenance' ) }
                 </h3>
@@ -77,6 +81,7 @@ const TemplatesPage = () => {
                     variant="primary"
                     href="post-new.php?post_type=sm_template"
                     target="_blank"
+                    aria-label={ __( 'Create new template (opens in new tab)', 'smooth-maintenance' ) }
                 >
                     { __( 'Create your first template', 'smooth-maintenance' ) }
                 </Button>
@@ -97,21 +102,28 @@ const TemplatesPage = () => {
                     variant="primary"
                     href="post-new.php?post_type=sm_template"
                     target="_blank"
+                    aria-label={ __( 'Create new template (opens in new tab)', 'smooth-maintenance' ) }
                 >
                     { __( '+ New Template', 'smooth-maintenance' ) }
                 </Button>
             </div>
 
-            <div className="sm-templates-grid">
+            <div
+                className="sm-templates-grid"
+                role="region"
+                aria-label={ __( 'Templates', 'smooth-maintenance' ) }
+                aria-busy={ loading }
+            >
                 { templates.map( ( template ) => {
                     const isActive = template.id === activeTemplateId;
+                    const title = template.title?.rendered || __( '(Untitled)', 'smooth-maintenance' );
                     return (
                         <div
                             key={ template.id }
                             className={ `sm-template-card${ isActive ? ' is-active' : '' }` }
                         >
                             <p className="sm-template-card__title">
-                                { template.title?.rendered || __( '(Untitled)', 'smooth-maintenance' ) }
+                                { title }
                                 { isActive && (
                                     <span className="sm-active-badge">Active ✓</span>
                                 ) }
@@ -125,6 +137,7 @@ const TemplatesPage = () => {
                                     variant="secondary"
                                     href={ `post.php?post=${ template.id }&action=edit` }
                                     target="_blank"
+                                    aria-label={ `${ __( 'Edit', 'smooth-maintenance' ) } ${ title } ${ __( 'in block editor', 'smooth-maintenance' ) }` }
                                 >
                                     { __( 'Edit →', 'smooth-maintenance' ) }
                                 </Button>
@@ -132,6 +145,10 @@ const TemplatesPage = () => {
                                     variant="primary"
                                     onClick={ () => handleSetActive( template.id ) }
                                     disabled={ isActive }
+                                    aria-label={ isActive
+                                        ? `${ title } ${ __( 'is the active template', 'smooth-maintenance' ) }`
+                                        : `${ __( 'Set', 'smooth-maintenance' ) } ${ title } ${ __( 'as active template', 'smooth-maintenance' ) }`
+                                    }
                                 >
                                     { isActive
                                         ? __( 'Active ✓', 'smooth-maintenance' )

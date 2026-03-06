@@ -54,7 +54,7 @@ const SubscribersPage = () => {
 
     if ( loading ) {
         return (
-            <div className="sm-card">
+            <div className="sm-card" role="status" aria-label={ __( 'Loading subscribers', 'smooth-maintenance' ) }>
                 <div className="sm-page-header">
                     <div className="sm-skeleton" style={ { width: '120px', height: '24px' } } />
                     <div className="sm-skeleton" style={ { width: '100px', height: '36px', borderRadius: '8px' } } />
@@ -72,9 +72,13 @@ const SubscribersPage = () => {
 
     if ( error ) {
         return (
-            <div className="sm-card sm-empty-state">
+            <div className="sm-card sm-empty-state" role="alert">
                 <p style={ { color: 'var(--sm-text-muted)', marginBottom: '16px' } }>{ error }</p>
-                <button className="sm-btn-primary" onClick={ () => fetchSubscribers( page ) }>
+                <button
+                    className="sm-btn-primary"
+                    onClick={ () => fetchSubscribers( page ) }
+                    aria-label={ __( 'Retry loading subscribers', 'smooth-maintenance' ) }
+                >
                     { __( 'Retry', 'smooth-maintenance' ) }
                 </button>
             </div>
@@ -97,6 +101,7 @@ const SubscribersPage = () => {
                         className="sm-btn-primary"
                         onClick={ exportCsv }
                         disabled={ subscribers.length === 0 }
+                        aria-label={ __( 'Export subscribers as CSV', 'smooth-maintenance' ) }
                     >
                         { __( 'Export CSV', 'smooth-maintenance' ) }
                     </button>
@@ -104,7 +109,7 @@ const SubscribersPage = () => {
 
                 { subscribers.length === 0 ? (
                     <div className="sm-empty-state">
-                        <div style={ { fontSize: '3rem', marginBottom: '16px' } }>📭</div>
+                        <div style={ { fontSize: '3rem', marginBottom: '16px' } } aria-hidden="true">📭</div>
                         <p style={ { fontWeight: 600, color: 'var(--sm-text)', marginBottom: '8px' } }>
                             { __( 'No subscribers yet', 'smooth-maintenance' ) }
                         </p>
@@ -116,9 +121,9 @@ const SubscribersPage = () => {
                     <table className="sm-subscribers-table">
                         <thead>
                             <tr>
-                                <th>{ __( 'Email', 'smooth-maintenance' ) }</th>
-                                <th>{ __( 'Subscribed', 'smooth-maintenance' ) }</th>
-                                <th>{ __( 'IP Address', 'smooth-maintenance' ) }</th>
+                                <th scope="col">{ __( 'Email', 'smooth-maintenance' ) }</th>
+                                <th scope="col">{ __( 'Subscribed', 'smooth-maintenance' ) }</th>
+                                <th scope="col">{ __( 'IP Address', 'smooth-maintenance' ) }</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -142,16 +147,22 @@ const SubscribersPage = () => {
                         className="sm-btn-secondary"
                         disabled={ page <= 1 }
                         onClick={ () => fetchSubscribers( page - 1 ) }
+                        aria-label={ __( 'Go to previous page', 'smooth-maintenance' ) }
                     >
                         { __( '← Previous', 'smooth-maintenance' ) }
                     </button>
-                    <span style={ { padding: '8px 16px', color: 'var(--sm-text-muted)', fontSize: '0.875rem' } }>
+                    <span
+                        style={ { padding: '8px 16px', color: 'var(--sm-text-muted)', fontSize: '0.875rem' } }
+                        aria-live="polite"
+                        aria-atomic="true"
+                    >
                         { page } / { pages }
                     </span>
                     <button
                         className="sm-btn-secondary"
                         disabled={ page >= pages }
                         onClick={ () => fetchSubscribers( page + 1 ) }
+                        aria-label={ __( 'Go to next page', 'smooth-maintenance' ) }
                     >
                         { __( 'Next →', 'smooth-maintenance' ) }
                     </button>
