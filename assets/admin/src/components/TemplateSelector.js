@@ -3,15 +3,16 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { SelectControl, Spinner, Button, Tooltip } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
+import { STORE_NAME } from '../store';
 
 const TemplateSelector = () => {
     const { settings, isSaving, hasLoaded } = useSelect((select) => ({
-        settings: select('smooth-maintenance').getSettings(),
-        isSaving: select('smooth-maintenance').isSaving(),
-        hasLoaded: select('smooth-maintenance').hasLoaded(),
+        settings: select(STORE_NAME).getSettings(),
+        isSaving: select(STORE_NAME).isSaving(),
+        hasLoaded: select(STORE_NAME).hasLoaded(),
     }), []);
 
-    const { updateSettings } = useDispatch('smooth-maintenance');
+    const { updateSettings } = useDispatch(STORE_NAME);
 
     const [templates, setTemplates] = useState([]);
     const [isFetching, setIsFetching] = useState(true);

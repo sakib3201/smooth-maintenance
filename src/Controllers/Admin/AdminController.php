@@ -31,12 +31,22 @@ class AdminController extends BaseController {
 	public function registerMenu(): void {
 		$this->hookSuffix = add_menu_page(
 			__( 'Smooth Maintenance', 'smooth-maintenance' ),
-			__( 'Maintenance', 'smooth-maintenance' ),
+			__( 'Smooth Maintenance', 'smooth-maintenance' ),
 			'manage_options',
 			Constants::SLUG,
 			array( $this, 'index' ),
 			'dashicons-hammer',
 			80
+		);
+
+		// Add explicit Dashboard submenu to ensure it's the target for the parent click.
+		add_submenu_page(
+			Constants::SLUG,
+			__( 'Smooth Maintenance Dashboard', 'smooth-maintenance' ),
+			__( 'Dashboard', 'smooth-maintenance' ),
+			'manage_options',
+			Constants::SLUG,
+			array( $this, 'index' )
 		);
 	}
 
@@ -63,7 +73,7 @@ class AdminController extends BaseController {
 			return;
 		}
 
-		$asset_file = Constants::pluginPath() . 'build/index.asset.php';
+		$asset_file = Constants::pluginPath() . 'build/admin.asset.php';
 
 		if ( ! file_exists( $asset_file ) ) {
 			return;
@@ -74,18 +84,18 @@ class AdminController extends BaseController {
 		// Enqueue JS.
 		wp_enqueue_script(
 			'smooth-maintenance-admin-js',
-			Constants::pluginUrl() . 'build/index.js',
+			Constants::pluginUrl() . 'build/admin.js',
 			$asset['dependencies'] ?? array(),
 			$asset['version'] ?? Constants::VERSION,
 			true
 		);
 
 		// Enqueue CSS.
-		$css_file = Constants::pluginPath() . 'build/index.css';
+		$css_file = Constants::pluginPath() . 'build/admin.css';
 		if ( file_exists( $css_file ) ) {
 			wp_enqueue_style(
 				'smooth-maintenance-admin-css',
-				Constants::pluginUrl() . 'build/index.css',
+				Constants::pluginUrl() . 'build/admin.css',
 				array( 'wp-components' ),
 				$asset['version'] ?? Constants::VERSION
 			);

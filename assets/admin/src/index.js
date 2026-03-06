@@ -4,14 +4,17 @@
  * @package SmoothMaintenance
  */
 
-import { createRoot } from '@wordpress/element';
+import { createRoot, render } from '@wordpress/element';
 import App from './App';
 import './store';
 import './styles/admin.scss';
 
-const rootElement = document.getElementById('smooth-maintenance-admin');
+const rootElement = document.getElementById( 'smooth-maintenance-admin' );
 
-if (rootElement) {
-    const root = createRoot(rootElement);
-    root.render(<App />);
+if ( rootElement ) {
+    if ( typeof createRoot === 'function' ) {
+        createRoot( rootElement ).render( <App /> );
+    } else {
+        render( <App />, rootElement );
+    }
 }

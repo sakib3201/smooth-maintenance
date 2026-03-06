@@ -231,7 +231,8 @@ class Bootstrap {
 			'admin_menu',
 			function () {
 				$this->container->make( AdminController::class )->registerMenu();
-			}
+			},
+			5
 		);
 
 		// Admin assets (only on plugin page).
