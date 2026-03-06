@@ -4,7 +4,8 @@
       "Bash(npm run:*)",
       "mcp__plugin_playwright_playwright__browser_navigate",
       "Bash(xargs grep:*)",
-      "Bash(ls missing:*)"
+      "Bash(ls missing:*)",
+      "Bash(ls Sites\\\\wpt\\\\app\\\\public\\\\wp-content\\\\plugins\\\\smooth-maintenance\\\\build\\\\blocks\\\\subscriber-form\\\\\":*)"
     ]
   }
 }

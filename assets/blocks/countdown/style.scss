@@ -34,18 +34,27 @@
     align-items: center;
     justify-content: center;
     padding: 2rem;
-    background: var(--sm-countdown-bg);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%),
+        var(--sm-countdown-bg);
     backdrop-filter: blur(var(--sm-countdown-blur));
     -webkit-backdrop-filter: blur(var(--sm-countdown-blur));
     border: 1px solid var(--sm-countdown-border);
     border-radius: 24px;
-    box-shadow: var(--sm-countdown-shadow);
+    box-shadow: var(--sm-countdown-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     min-width: 140px;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition:
+        transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        box-shadow 0.3s ease;
 
     &:hover {
+        will-change: transform;
         transform: translateY(-5px);
         border-color: rgba(255, 255, 255, 0.3);
+        box-shadow:
+            var(--sm-countdown-shadow),
+            0 0 0 1px rgba(255, 255, 255, 0.2),
+            0 8px 32px rgba(0, 0, 0, 0.35);
     }
 }
 
@@ -55,7 +64,7 @@
     line-height: 1;
     margin-bottom: 0.5rem;
     font-variant-numeric: tabular-nums;
-    color: #ffffff;
+    color: var(--sm-number-color, #ffffff);
     text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -64,8 +73,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    opacity: 0.6;
-    color: #ffffff;
+    color: var(--sm-label-color, rgba(255, 255, 255, 0.65));
 }
 
 .sm-countdown-expired {
@@ -76,7 +84,23 @@
     backdrop-filter: blur(var(--sm-countdown-blur));
     border-radius: 20px;
     border: 1px solid var(--sm-countdown-border);
-    color: #ffffff;
+    color: var(--sm-number-color, #ffffff);
+}
+
+/* Tick animation */
+@keyframes sm-tick {
+    from {
+        opacity: 0.5;
+        transform: translateY(-3px) scale(1.06);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.sm-countdown-number.sm-tick {
+    animation: sm-tick 0.25s ease-out forwards;
 }
 
 /* Responsiveness Refinement */

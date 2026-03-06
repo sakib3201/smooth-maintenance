@@ -7,12 +7,18 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps } from '@wordpress/block-editor';
 
 export default function save({ attributes }) {
-    const { endDate, expiredMessage } = attributes;
+    const { endDate, expiredMessage, numberColor, labelColor } = attributes;
+
+    const wrapperStyle = {
+        ...(numberColor && { '--sm-number-color': numberColor }),
+        ...(labelColor && { '--sm-label-color': labelColor }),
+    };
 
     const blockProps = useBlockProps.save({
         className: 'sm-countdown-wrapper',
         'data-end-date': endDate,
         'data-expired-message': expiredMessage,
+        style: wrapperStyle,
     });
 
     if (!endDate) {

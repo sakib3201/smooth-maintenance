@@ -3,6 +3,14 @@
  * Performance note: Zero heavy dependencies, simple interval.
  */
 
+function setWithTick(el, val) {
+    if (el.textContent === val) return;
+    el.textContent = val;
+    el.classList.remove('sm-tick');
+    void el.offsetWidth; // force reflow to restart animation
+    el.classList.add('sm-tick');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const countdownBlocks = document.querySelectorAll('.sm-countdown-wrapper');
 
@@ -43,10 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            daysEl.textContent = String(days).padStart(2, '0');
-            hoursEl.textContent = String(hours).padStart(2, '0');
-            minsEl.textContent = String(minutes).padStart(2, '0');
-            secsEl.textContent = String(seconds).padStart(2, '0');
+            setWithTick(daysEl, String(days).padStart(2, '0'));
+            setWithTick(hoursEl, String(hours).padStart(2, '0'));
+            setWithTick(minsEl, String(minutes).padStart(2, '0'));
+            setWithTick(secsEl, String(seconds).padStart(2, '0'));
         };
 
         // Run immediately, then interval

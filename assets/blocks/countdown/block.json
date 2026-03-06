@@ -10,7 +10,6 @@
     "supports": {
         "html": false,
         "color": {
-            "text": true,
             "background": false
         },
         "typography": {
@@ -24,6 +23,14 @@
         "expiredMessage": {
             "type": "string",
             "default": "We are live!"
+        },
+        "numberColor": {
+            "type": "string",
+            "default": ""
+        },
+        "labelColor": {
+            "type": "string",
+            "default": ""
         }
     },
     "textdomain": "smooth-maintenance",
