@@ -1,10 +1,6 @@
-/**
- * Template Selector Component.
- */
-
 import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { SelectControl, Spinner, Button } from '@wordpress/components';
+import { SelectControl, Spinner, Button, Tooltip } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 
@@ -39,63 +35,65 @@ const TemplateSelector = () => {
 
     if (!hasLoaded || isFetching) {
         return (
-            <div className="sm-card sm-template-selector sm-loading">
+            <div className="sm-card sm-loading">
                 <Spinner />
-                <p>{__('Loading templates...', 'smooth-maintenance')}</p>
+                <p>{__('Fetching premium templates...', 'smooth-maintenance')}</p>
             </div>
         );
     }
 
-    const activeTemplate = settings.active_template ? parseInt(settings.active_template, 10) : 0;
+    const activeTemplateId = settings.active_template ? parseInt(settings.active_template, 10) : 0;
 
-    const handleChange = (newTemplateId) => {
-        updateSettings({ active_template: parseInt(newTemplateId, 10) });
+    const handleChange = (newId) => {
+        updateSettings({ active_template: parseInt(newId, 10) });
     };
 
-    const hasTemplates = templates.length > 0;
-
     return (
-        <div className="sm-card sm-template-selector">
-            <h3>{__('Maintenance Template', 'smooth-maintenance')}</h3>
-            <p className="sm-description">
-                {__('Select which Gutenberg-designed template to display when maintenance mode is active.', 'smooth-maintenance')}
+        <div className="sm-card">
+            <h3>{__('Visual Identity', 'smooth-maintenance')}</h3>
+            <p className="sm-text-muted">
+                {__('Choose the visual template that your visitors will encounter. All templates are fully customizable via the Gutenberg editor.', 'smooth-maintenance')}
             </p>
 
-            <div className="sm-template-controls">
-                {hasTemplates ? (
+            <div className="sm-template-controls" style={{ display: 'flex', gap: '12px', alignItems: 'flex-end', marginTop: '24px' }}>
+                <div style={{ flex: 1 }}>
                     <SelectControl
-                        value={activeTemplate}
+                        label={__('Active Design Template', 'smooth-maintenance')}
+                        value={activeTemplateId}
                         options={[
-                            { label: __('— Select a Template —', 'smooth-maintenance'), value: 0 },
+                            { label: __('— Choose your design —', 'smooth-maintenance'), value: 0 },
                             ...templates,
                         ]}
                         onChange={handleChange}
                         disabled={isSaving}
+                        __nextHasNoMarginBottom
                     />
-                ) : (
-                    <p className="sm-error-text">
-                        {__('No templates found. Please create one under Maintenance > Templates.', 'smooth-maintenance')}
-                    </p>
-                )}
+                </div>
 
-                {activeTemplate > 0 && (
-                    <Button
-                        isSecondary
-                        href={`post.php?post=${activeTemplate}&action=edit`}
-                        target="_blank"
-                    >
-                        {__('Edit in Gutenberg', 'smooth-maintenance')}
-                    </Button>
+                {activeTemplateId > 0 && (
+                    <Tooltip text={__('Open the block editor for this design', 'smooth-maintenance')}>
+                        <Button
+                            variant="secondary"
+                            href={`post.php?post=${activeTemplateId}&action=edit`}
+                            target="_blank"
+                            style={{ height: '40px' }}
+                        >
+                            {__('Edit Template', 'smooth-maintenance')}
+                        </Button>
+                    </Tooltip>
                 )}
             </div>
 
-            <div className="sm-template-footer">
-                <Button
-                    isLink
-                    href="edit.php?post_type=sm_template"
-                >
-                    {__('Manage All Templates', 'smooth-maintenance')}
-                </Button>
+            <div className="sm-template-footer" style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid var(--sm-border)' }}>
+                <Tooltip text={__('View and manage all your saved maintenance designs', 'smooth-maintenance')}>
+                    <Button
+                        variant="link"
+                        href="edit.php?post_type=sm_template"
+                        style={{ padding: 0 }}
+                    >
+                        {__('Manage all templates →', 'smooth-maintenance')}
+                    </Button>
+                </Tooltip>
             </div>
         </div>
     );

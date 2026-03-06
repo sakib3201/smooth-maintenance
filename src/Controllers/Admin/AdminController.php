@@ -96,11 +96,54 @@ class AdminController extends BaseController {
 			'smooth-maintenance-admin-js',
 			'smoothMaintenanceAdmin',
 			array(
-				'restUrl'  => esc_url_raw( rest_url( Constants::REST_NAMESPACE ) ),
-				'nonce'    => wp_create_nonce( 'wp_rest' ),
-				'version'  => Constants::VERSION,
-				'adminUrl' => admin_url(),
+				'restUrl'    => esc_url_raw( rest_url( Constants::REST_NAMESPACE ) ),
+				'nonce'      => wp_create_nonce( 'wp_rest' ),
+				'version'    => Constants::VERSION,
+				'adminUrl'   => admin_url(),
+				'pluginUrl'  => Constants::pluginUrl(),
+				'wpAdminUrl' => admin_url(),
 			)
 		);
+
+		// Hide WordPress standard admin elements for a SAAS experience.
+		add_action( 'admin_head', array( $this, 'hideWordPressUI' ) );
+		add_filter( 'admin_body_class', array( $this, 'addAdminBodyClass' ) );
+	}
+
+	/**
+	 * Inject CSS to hide standard WordPress admin elements.
+	 *
+	 * @return void
+	 */
+	public function hideWordPressUI(): void {
+		echo '
+		<style id="sm-fullscreen-admin-style">
+			#adminmenuwrap, #adminmenuback, #wpadminbar, #screen-meta-links, #wpfooter {
+				display: none !important;
+			}
+			#wpcontent, #wpbody-content {
+				margin-left: 0 !important;
+				padding: 0 !important;
+			}
+			#wpbody {
+				padding: 0 !important;
+			}
+			.notice, .updated, .error {
+				display: none !important; /* Managed by plugin app */
+			}
+			html.wp-toolbar {
+				padding-top: 0 !important;
+			}
+		</style>';
+	}
+
+	/**
+	 * Add custom class to admin body.
+	 *
+	 * @param string $classes Current body classes.
+	 * @return string Modified body classes.
+	 */
+	public function addAdminBodyClass( string $classes ): string {
+		return $classes . ' sm-saas-admin ';
 	}
 }
