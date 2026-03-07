@@ -181,9 +181,9 @@ add_filter( 'smooth_maintenance_html', function( $html ) {
 
 ## Roadmap
 
-- **v1.2** — Email subscriber capture block, Mailchimp/ConvertKit webhooks
-- **v1.3** — Preview link with secret tokens, IP whitelist, role-based bypass
-- **v2.0** — Advanced Analytics, A/B testing of templates
+- **v1.1** — Mailchimp/ConvertKit webhooks
+- **v1.2** — Preview link with secret tokens, IP whitelist, role-based bypass
+- **v1.3** — Advanced Analytics, A/B testing of templates
 
 ## License
 
