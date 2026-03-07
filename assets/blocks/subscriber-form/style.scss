@@ -19,13 +19,11 @@
     display: flex;
     gap: 0.5rem;
     width: 100%;
-    padding: 0.5rem;
-    background: rgba(255, 255, 255, 0.08);
-    /* Match Countdown */
+    padding: var(--sm-container-padding, 8px);
+    background: var(--sm-container-bg, rgba(255, 255, 255, 0.08));
     backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 50px;
-    /* Modern pill shape */
+    border: var(--sm-container-border-width, 1px) solid var(--sm-container-border, rgba(255, 255, 255, 0.15));
+    border-radius: var(--sm-container-radius, 50px);
     transition: border-color 0.3s ease;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 
@@ -36,33 +34,35 @@
 
 .sm-subscriber-email {
     flex-grow: 1;
-    background: transparent;
+    background: var(--sm-input-bg, transparent);
     border: none;
     padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    color: #ffffff;
+    font-size: var(--sm-input-font-size, 16px);
+    color: var(--sm-input-text-color, #ffffff);
     outline: none;
     width: 100%;
+    border-radius: var(--sm-input-radius, 50px);
 
     &::placeholder {
-        color: rgba(255, 255, 255, 0.5);
+        color: var(--sm-input-placeholder-color, rgba(255, 255, 255, 0.5));
     }
 }
 
 .sm-subscriber-submit {
     padding: 0.75rem 2rem;
-    background: #ffffff;
-    border: none;
-    border-radius: 50px;
-    font-weight: 700;
-    color: #0f172a;
+    background: var(--sm-btn-bg, #ffffff);
+    border: 1px solid var(--sm-btn-border-color, transparent);
+    border-radius: var(--sm-btn-radius, 50px);
+    font-weight: var(--sm-btn-font-weight, 700);
+    font-size: var(--sm-btn-font-size, 16px);
+    color: var(--sm-btn-text-color, #0f172a);
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
     &:hover {
-        background: #f1f5f9;
+        background: var(--sm-btn-hover-bg, #f1f5f9);
         transform: scale(1.02);
     }
 
@@ -87,7 +87,7 @@
             top: 50%;
             left: 50%;
             margin: -8px 0 0 -8px;
-            border: 2px solid #0f172a;
+            border: 2px solid var(--sm-btn-text-color, #0f172a);
             border-top-color: transparent;
             border-radius: 50%;
             animation: sm-spin 0.6s linear infinite;
@@ -97,11 +97,10 @@
 
 .sm-subscriber-success {
     padding: 2rem;
-    background: rgba(34, 197, 94, 0.15);
-    /* Soft green glassmorphism */
-    border: 1px solid rgba(34, 197, 94, 0.3);
-    border-radius: 20px;
-    color: #ffffff;
+    background: var(--sm-success-bg, rgba(34, 197, 94, 0.15));
+    border: 1px solid var(--sm-success-border-color, rgba(34, 197, 94, 0.3));
+    border-radius: var(--sm-success-radius, 20px);
+    color: var(--sm-success-text-color, #ffffff);
     font-weight: 600;
     text-align: center;
     backdrop-filter: blur(10px);
@@ -136,7 +135,7 @@
 @media (max-width: 600px) {
     .sm-form-group {
         flex-direction: column;
-        border-radius: 20px;
+        border-radius: var(--sm-container-radius, 50px);
         padding: 0.5rem;
         background: transparent;
         border: none;
@@ -145,15 +144,15 @@
     }
 
     .sm-subscriber-email {
-        background: rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: var(--sm-input-bg, rgba(255, 255, 255, 0.08));
+        border-radius: var(--sm-input-radius, 12px);
+        border: 1px solid var(--sm-input-border-color, rgba(255, 255, 255, 0.15));
         padding: 1rem;
     }
 
     .sm-subscriber-submit {
         width: 100%;
         padding: 1rem;
-        border-radius: 12px;
+        border-radius: var(--sm-btn-radius, 50px);
     }
 }

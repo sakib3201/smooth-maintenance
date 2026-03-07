@@ -26,6 +26,94 @@
         "successMessage": {
             "type": "string",
             "default": "Thanks! You've been subscribed."
+        },
+        "containerBackgroundColor": {
+            "type": "string",
+            "default": ""
+        },
+        "containerBorderColor": {
+            "type": "string",
+            "default": ""
+        },
+        "containerBorderRadius": {
+            "type": "number",
+            "default": 50
+        },
+        "containerPadding": {
+            "type": "number",
+            "default": 8
+        },
+        "containerBorderWidth": {
+            "type": "number",
+            "default": 1
+        },
+        "inputTextColor": {
+            "type": "string",
+            "default": ""
+        },
+        "inputPlaceholderColor": {
+            "type": "string",
+            "default": ""
+        },
+        "inputBackgroundColor": {
+            "type": "string",
+            "default": ""
+        },
+        "inputBorderColor": {
+            "type": "string",
+            "default": ""
+        },
+        "inputBorderRadius": {
+            "type": "number",
+            "default": 50
+        },
+        "inputFontSize": {
+            "type": "number",
+            "default": 16
+        },
+        "buttonTextColor": {
+            "type": "string",
+            "default": ""
+        },
+        "buttonBackgroundColor": {
+            "type": "string",
+            "default": ""
+        },
+        "buttonHoverBackgroundColor": {
+            "type": "string",
+            "default": ""
+        },
+        "buttonBorderColor": {
+            "type": "string",
+            "default": ""
+        },
+        "buttonBorderRadius": {
+            "type": "number",
+            "default": 50
+        },
+        "buttonFontSize": {
+            "type": "number",
+            "default": 16
+        },
+        "buttonFontWeight": {
+            "type": "number",
+            "default": 700
+        },
+        "successTextColor": {
+            "type": "string",
+            "default": ""
+        },
+        "successBackgroundColor": {
+            "type": "string",
+            "default": ""
+        },
+        "successBorderColor": {
+            "type": "string",
+            "default": ""
+        },
+        "successBorderRadius": {
+            "type": "number",
+            "default": 20
         }
     },
     "textdomain": "smooth-maintenance",
