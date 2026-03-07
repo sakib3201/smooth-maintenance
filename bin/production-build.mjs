@@ -29,6 +29,8 @@ const DIST_PLUGIN = path.join(DIST_ROOT, PLUGIN_SLUG);
 const EXCLUDE = new Set([
     '.git',
     '.github',
+    '.claude',
+    '.playwright',
     'node_modules',
     'vendor',         // Will be re-installed --no-dev below
     'tests',
