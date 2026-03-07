@@ -47,6 +47,7 @@ class PreviewService {
 		}
 
 		$content = do_blocks( $post->post_content );
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		$content = apply_filters( 'the_content', $content );
 
 		$html_content = apply_filters( 'smooth_maintenance_html', $content );

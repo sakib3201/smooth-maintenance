@@ -112,6 +112,7 @@ class MaintenanceService {
 			// Process Gutenberg blocks into HTML.
 			$content = do_blocks( $post->post_content );
 			// Process shortcodes and other core filters.
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			$content = apply_filters( 'the_content', $content );
 		} else {
 			// Fallback if no valid template is set or found.

@@ -122,7 +122,7 @@ class MaintenanceController extends BaseController {
 		$subscriber = \SmoothMaintenance\Models\Subscriber::create( array(
 			'email'         => $email,
 			'subscribed_at' => current_time( 'mysql' ),
-			'ip_address'    => $request->get_header( 'X-Forwarded-For' ) ?: $_SERVER['REMOTE_ADDR'] ?: '',
+			'ip_address'    => $request->get_header( 'X-Forwarded-For' ) ?: ( isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '' ),
 			'user_agent'    => $request->get_header( 'User-Agent' ) ?: '',
 		) );
 

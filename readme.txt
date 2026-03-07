@@ -2,7 +2,7 @@
 Contributors: sakib3201
 Tags: maintenance mode, coming soon, under construction, maintenance, countdown
 Requires at least: 6.2
-Tested up to: 6.7
+Tested up to: 6.9
 Stable tag: 1.0.0
 Requires PHP: 8.0
 License: GPL-2.0-or-later

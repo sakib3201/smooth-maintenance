@@ -13,14 +13,14 @@ use SmoothMaintenance\Models\Settings;
 class MaintenanceServiceTest extends TestCase {
 
 	protected function setUp(): void {
-		global $wp_test_options;
-		$wp_test_options = array();
+		global $wp_test_options; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+		$wp_test_options = array(); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		Settings::resetCache();
 	}
 
 	protected function tearDown(): void {
-		global $wp_test_options;
-		$wp_test_options = array();
+		global $wp_test_options; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+		$wp_test_options = array(); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		Settings::resetCache();
 	}
 

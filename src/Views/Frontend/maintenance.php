@@ -23,7 +23,9 @@ defined( 'ABSPATH' ) || exit;
 	<title><?php echo esc_html( $site_name ); ?> &mdash; <?php echo esc_html__( 'Under Maintenance', 'smooth-maintenance' ); ?></title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<?php // phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
 	<style>
 		*, *::before, *::after {
 			margin: 0;

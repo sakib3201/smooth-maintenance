@@ -55,11 +55,7 @@ class Subscriber extends BaseModel {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$row = $wpdb->get_row(
-			$wpdb->prepare(
-				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-				"SELECT * FROM {$table} WHERE email = %s",
-				$email
-			),
+			$wpdb->prepare( 'SELECT * FROM %i WHERE email = %s', $table, $email ),
 			ARRAY_A
 		);
 
@@ -103,8 +99,8 @@ class Subscriber extends BaseModel {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-				"SELECT id, email, subscribed_at, ip_address FROM {$table} ORDER BY subscribed_at DESC LIMIT %d OFFSET %d",
+				'SELECT id, email, subscribed_at, ip_address FROM %i ORDER BY subscribed_at DESC LIMIT %d OFFSET %d',
+				$table,
 				$limit,
 				$offset
 			),
@@ -122,10 +118,7 @@ class Subscriber extends BaseModel {
 		global $wpdb;
 		$table = static::getTable();
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		return (int) $wpdb->get_var(
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			"SELECT COUNT(*) FROM {$table}"
-		);
+		return (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM %i', $table ) );
 	}
 
 	/**

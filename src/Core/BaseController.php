@@ -76,8 +76,8 @@ abstract class BaseController {
 			};
 
 			if ( ! $valid ) {
-				/* translators: 1: field name, 2: expected type */
 				return sprintf(
+					/* translators: 1: field name, 2: expected type */
 					__( 'Field "%1$s" must be of type %2$s.', 'smooth-maintenance' ),
 					$key,
 					$type

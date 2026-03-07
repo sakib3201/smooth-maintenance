@@ -142,8 +142,9 @@ abstract class BaseModel {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$row = $wpdb->get_row(
 			$wpdb->prepare(
-				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-				"SELECT * FROM {$table} WHERE {$pk} = %d",
+				'SELECT * FROM %i WHERE %i = %d',
+				$table,
+				$pk,
 				$id
 			),
 			ARRAY_A

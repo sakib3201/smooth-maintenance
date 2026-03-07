@@ -71,6 +71,7 @@ class Container {
 		}
 
 		if ( ! isset( $this->bindings[ $abstract ] ) ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 			throw new \RuntimeException( "No binding found for: {$abstract}" );
 		}
 

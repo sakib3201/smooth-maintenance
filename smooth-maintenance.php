@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Smooth Maintenance
- * Plugin URI:  https://example.com/smooth-maintenance
+ * Plugin URI:  https://wordpress.org/plugins/smooth-maintenance
  * Description: A modern maintenance mode plugin with MVC architecture and React admin interface.
  * Version:     1.0.0
  * Author:      Smooth Maintenance
- * Author URI:  https://example.com
+ * Author URI:  https://profiles.wordpress.org/sakib3201
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: smooth-maintenance
